@@ -5,7 +5,7 @@ A Python command-line tool for sending HTTP requests with different data types t
 ## Usage
 
 ```
-python request_sender.py -u <url> -r <request> [-d <data>] [-H <headers>] [-p <parameters>] [-t <content-type>]
+python sman.py -u <url> -r <request> [-d <data>] [-H <headers>] [-p <parameters>] [-t <content-type>]
 ```
 
 ### Arguments
@@ -32,19 +32,19 @@ python request_sender.py -u <url> -r <request> [-d <data>] [-H <headers>] [-p <p
 ### Send a POST request with JSON data
 
 ```
-python request_sender.py -u https://example.com/api -r post -d '{"name": "John", "age": 30}'
+python sman.py -u https://example.com/api -r post -d '{"name": "John", "age": 30}'
 ```
 
 ### Send a GET request with custom headers and URL parameters
 
 ```
-python request_sender.py -u https://example.com/api -r get -H '{"Authorization": "Bearer token"}' -p '{"page": 1, "limit": 10}'
+python sman.py -u https://example.com/api -r get -H '{"Authorization": "Bearer token"}' -p '{"page": 1, "limit": 10}'
 ```
 
 ### Send a POST request with form data
 
 ```
-python request_sender.py -u https://example.com/submit -r post -d 'username=johndoe&password=secret' -t application/x-www-form-urlencoded
+python sman.py -u https://example.com/submit -r post -d 'username=johndoe&password=secret' -t application/x-www-form-urlencoded
 ```
 
 ## Dependencies
