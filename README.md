@@ -2,6 +2,16 @@
 
 A Python command-line tool for sending HTTP requests with different data types to a server.
 
+## Update
+- `--save-file` argument: Allows the user to specify a file path to save the response.
+- `--show-response` argument: When provided, displays the response content on the console.
+- Saving the response to a file: If the `--save-file` argument is provided, the response content is saved to the specified file.
+- Printing a message when the response is saved successfully.
+- Additional module checking and installation logic: Checks if the required modules are installed and offers to install them if missing.
+- Module installation using `pip`: Uses `pip` to install the missing modules automatically.
+
+These additions enhance the functionality of the script by allowing the user to save the response to a file and control whether the response should be displayed or not.
+
 ## Usage
 
 ```
