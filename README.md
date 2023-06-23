@@ -77,9 +77,8 @@ pip install requests argparse colorama
 
 ## License
 
-This project is licensed under the MIT License. See the [
-
-LICENSE](https://alor28.web.app) file for details.
+This project is licensed under the MIT License. See the 
+[LICENSE](https://alor28.web.app) file for details.
 
 ---
 
