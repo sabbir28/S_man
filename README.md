@@ -15,7 +15,7 @@ These additions enhance the functionality of the script by allowing the user to 
 ## Usage
 
 ```
-python sman.py -u <url> -r <request> [-d <data>] [-H <headers>] [-p <parameters>] [-t <content-type>]
+python sman.py -u <url> -r <request> [-d <data>] [-H <headers>] [-p <parameters>] [-t <content-type>] [-s <save-file>] [--show-response]
 ```
 
 ### Arguments
@@ -26,6 +26,8 @@ python sman.py -u <url> -r <request> [-d <data>] [-H <headers>] [-p <parameters>
 - `-H, --headers`: Custom headers to include in the request, specified in JSON format. (Optional)
 - `-p, --params`: URL parameters to include in the request, specified in JSON format. (Optional)
 - `-t, --content-type`: The content type of the request. Defaults to 'application/json'. (Optional)
+- `-s, --save-file`: File path to save the response. (Optional)
+- `--show-response`: Display the response content on the console. (Optional)
 
 ## Supported Data Types
 
@@ -42,19 +44,19 @@ python sman.py -u <url> -r <request> [-d <data>] [-H <headers>] [-p <parameters>
 ### Send a POST request with JSON data
 
 ```
-python sman.py -u https://example.com/api -r post -d '{"name": "John", "age": 30}'
+python sman.py -u https://example.com/api -r post -d '{"name": "John", "age": 30}' --show-response
 ```
 
 ### Send a GET request with custom headers and URL parameters
 
 ```
-python sman.py -u https://example.com/api -r get -H '{"Authorization": "Bearer token"}' -p '{"page": 1, "limit": 10}'
+python sman.py -u https://example.com/api -r get -H '{"Authorization": "Bearer token"}' -p '{"page": 1, "limit": 10}' --save-file response.txt
 ```
 
 ### Send a POST request with form data
 
 ```
-python sman.py -u https://example.com/submit -r post -d 'username=johndoe&password=secret' -t application/x-www-form-urlencoded
+python sman.py -u https://example.com/submit -r post -d 'username=johndoe&password=secret' -t application/x-www-form-urlencoded --show-response
 ```
 
 ## Dependencies
@@ -75,7 +77,9 @@ pip install requests argparse colorama
 
 ## License
 
-This project is licensed under the MIT License. See the https://alor28.web.app file for details.
+This project is licensed under the MIT License. See the [
+
+LICENSE](https://alor28.web.app) file for details.
 
 ---
 
