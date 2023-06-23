@@ -104,6 +104,7 @@ def main():
     parser.add_argument('-p', '--params', help='URL parameters (in quotes)')
     parser.add_argument('-t', '--content-type', help='Content type for the request')
     parser.add_argument('-s', '--save-file', help='File path to save the response')
+    parser.add_argument('--show-response', action='store_true', help='Display the response')
 
     args = parser.parse_args()
 
@@ -142,9 +143,10 @@ def main():
         print("Invalid HTTP request method.")
         return
 
-    print("Response:")
-    response_content = response.decode()
-    print(response_content)
+    if args.show_response:
+        print("Response:")
+        response_content = response.decode()
+        print(response_content)
 
     if save_file:
         try:
