@@ -7,7 +7,6 @@ import os
 import sys
 import subprocess
 
-
 colorama.init()
 
 # Define the banner text
@@ -61,6 +60,7 @@ def send_post_request(url, data, headers=None, params=None, content_type='applic
     response = requests.post(url, data=data, headers=headers, params=params)
     return response.content
 
+
 def check_module_installed(module_name):
     try:
         importlib.import_module(module_name)
@@ -68,8 +68,10 @@ def check_module_installed(module_name):
     except ImportError:
         return False
 
+
 def install_module(module_name):
     subprocess.check_call([sys.executable, "-m", "pip", "install", module_name])
+
 
 def main():
     """
@@ -92,7 +94,7 @@ def main():
         else:
             print("Cannot proceed without installing the missing modules.")
             return
-  
+
     parser = argparse.ArgumentParser(description='Send requests with different data types to a server.')
     parser.add_argument('-u', '--url', required=True, help='Server URL')
     parser.add_argument('-r', '--request', choices=['get', 'post'], required=True,
@@ -101,6 +103,8 @@ def main():
     parser.add_argument('-H', '--headers', help='Custom headers (in quotes)')
     parser.add_argument('-p', '--params', help='URL parameters (in quotes)')
     parser.add_argument('-t', '--content-type', help='Content type for the request')
+    parser.add_argument('-s', '--save-file', help='File path to save the response')
+
     args = parser.parse_args()
 
     url = args.url
@@ -123,6 +127,8 @@ def main():
             return
 
     content_type = args.content_type
+    save_file = args.save_file
+
     if method == 'get':
         response = send_get_request(url, headers=headers, params=params)
     elif method == 'post':
@@ -137,7 +143,16 @@ def main():
         return
 
     print("Response:")
-    print(response.decode())
+    response_content = response.decode()
+    print(response_content)
+
+    if save_file:
+        try:
+            with open(save_file, 'w') as file:
+                file.write(response_content)
+            print(f"Response saved to {save_file} successfully.")
+        except Exception as e:
+            print(f"Error occurred while saving the file: {e}")
 
 
 if __name__ == "__main__":
