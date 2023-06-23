@@ -2,6 +2,11 @@ import argparse
 import requests
 import json
 import colorama
+import importlib
+import os
+import sys
+import subprocess
+
 
 colorama.init()
 
@@ -56,11 +61,38 @@ def send_post_request(url, data, headers=None, params=None, content_type='applic
     response = requests.post(url, data=data, headers=headers, params=params)
     return response.content
 
+def check_module_installed(module_name):
+    try:
+        importlib.import_module(module_name)
+        return True
+    except ImportError:
+        return False
+
+def install_module(module_name):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", module_name])
 
 def main():
     """
     Main function to handle command-line arguments and execute the request sending functionality.
     """
+    # Check if the required modules are installed
+    required_modules = ['argparse', 'requests', 'json', 'colorama']
+    missing_modules = []
+    for module in required_modules:
+        if not check_module_installed(module):
+            missing_modules.append(module)
+
+    if missing_modules:
+        print(f"The following modules are missing: {', '.join(missing_modules)}")
+        install_modules = input("Do you want to install the missing modules? (y/n): ")
+        if install_modules.lower() == 'y':
+            for module in missing_modules:
+                install_module(module)
+            print("Modules installed successfully.")
+        else:
+            print("Cannot proceed without installing the missing modules.")
+            return
+  
     parser = argparse.ArgumentParser(description='Send requests with different data types to a server.')
     parser.add_argument('-u', '--url', required=True, help='Server URL')
     parser.add_argument('-r', '--request', choices=['get', 'post'], required=True,
