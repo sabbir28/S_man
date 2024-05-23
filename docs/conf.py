@@ -1,4 +1,4 @@
-# Configuration file for Sphinx documentation builder.
+# Configuration file for the Sphinx documentation builder.
 #
 # This file only contains a selection of the most common options. For a full
 # list see the documentation:
@@ -6,9 +6,10 @@
 
 import os
 import sys
+import sphinx_rtd_theme
 
 # -- Path setup --------------------------------------------------------------
-sys.path.insert(0, os.path.abspath('.'))
+sys.path.insert(0, os.path.abspath('..'))
 
 # -- Project information -----------------------------------------------------
 project = 'Sman'
@@ -21,13 +22,12 @@ release = '1.0'
 version = '1.0'
 
 # -- General configuration ---------------------------------------------------
-# Add any Sphinx extension module names here, as strings. They can be extensions
-# coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
     'sphinx.ext.todo',
     'sphinx.ext.viewcode',
+    'recommonmark',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -45,11 +45,13 @@ html_static_path = ['_static']
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
-# Set the master document to the README file
+# Set the master document to the index file
 master_doc = 'index'
 
 # Specify the Markdown parser to use
-source_parsers = {
-   '.md': 'recommonmark.parser.CommonMarkParser',
+source_suffix = {
+    '.md': 'markdown',
 }
-source_suffix = ['.md']
+
+# Enable todo extension
+todo_include_todos = True
