@@ -52,4 +52,4 @@ master_doc = 'README'
 source_parsers = {
    '.md': 'recommonmark.parser.CommonMarkParser',
 }
-source_suffix = ['.rst', '.md']
+source_suffix = ['.md']
