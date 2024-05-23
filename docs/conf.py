@@ -46,7 +46,7 @@ html_static_path = ['_static']
 templates_path = ['_templates']
 
 # Set the master document to the README file
-master_doc = 'README'
+master_doc = 'index'
 
 # Specify the Markdown parser to use
 source_parsers = {
