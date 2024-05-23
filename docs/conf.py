@@ -4,10 +4,11 @@
 # list see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
-# -- Path setup --------------------------------------------------------------
 import os
 import sys
-sys.path.insert(0, os.path.abspath('..'))
+
+# -- Path setup --------------------------------------------------------------
+sys.path.insert(0, os.path.abspath('.'))
 
 # -- Project information -----------------------------------------------------
 project = 'Sman'
@@ -37,10 +38,18 @@ templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # -- Options for HTML output -------------------------------------------------
-# html_theme = 'sphinx_rtd_theme'  # Comment out or remove this line
-html_theme = 'alabaster'  # Use the 'alabaster' theme instead
+html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 
 # -- Extension configuration -------------------------------------------------
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
+
+# Set the master document to the README file
+master_doc = 'README'
+
+# Specify the Markdown parser to use
+source_parsers = {
+   '.md': 'recommonmark.parser.CommonMarkParser',
+}
+source_suffix = ['.rst', '.md']
