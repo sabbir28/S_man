@@ -1,0 +1,103 @@
+name: Build and Release Sman
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: pip install pyinstaller
+
+    - name: Build executable
+      run: |
+        if [[ "${{ matrix.os }}" == 'windows-latest' ]]; then
+          pyinstaller --onefile sman.py --name sman.exe
+        else
+          pyinstaller --onefile sman.py --name sman
+        fi
+      shell: bash
+
+    - name: Archive executable
+      run: |
+        if [[ "${{ matrix.os }}" == 'windows-latest' ]]; then
+          zip sman-windows.zip dist/sman.exe
+        elif [[ "${{ matrix.os }}" == 'macos-latest' ]]; then
+          zip sman-mac.zip dist/sman
+        else
+          zip sman-linux.zip dist/sman
+        fi
+      shell: bash
+      working-directory: dist
+
+    - name: Upload executable
+      uses: actions/upload-artifact@v3
+      with:
+        name: sman-${{ matrix.os }}
+        path: |
+          dist/sman-windows.zip
+          dist/sman-mac.zip
+          dist/sman-linux.zip
+
+  release:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Download artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: sman-ubuntu-latest
+        path: .
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Assets
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: dist/sman-linux.zip
+        asset_name: sman-linux.zip
+        asset_content_type: application/zip
+    - name: Upload Release Assets
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: dist/sman-mac.zip
+        asset_name: sman-mac.zip
+        asset_content_type: application/zip
+    - name: Upload Release Assets
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: dist/sman-windows.zip
+        asset_name: sman-windows.zip
+        asset_content_type: application/zip
