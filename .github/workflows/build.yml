@@ -36,3 +36,5 @@ jobs:
       with:
         name: linux-executable
         path: dist/linux/sman
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
