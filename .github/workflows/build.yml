@@ -1,4 +1,4 @@
-name: Build Executables
+name: Build Linux Executable
 
 on:
   push:
@@ -25,25 +25,14 @@ jobs:
       run: |
         pip install pyinstaller
 
-    - name: Install Wine for Windows build
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y wine
-
     - name: Build Linux executable
       run: |
         pyinstaller --onefile sman.py
         mkdir -p dist/linux
         mv dist/sman dist/linux/sman
 
-    - name: Build Windows executable using Wine
-      run: |
-        wine pyinstaller --onefile sman.py
-        mkdir -p dist/windows
-        mv dist/sman.exe dist/windows/sman.exe
-
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: executables
-        path: dist/
+        name: linux-executable
+        path: dist/linux/sman
