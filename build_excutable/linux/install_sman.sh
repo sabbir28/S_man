@@ -29,6 +29,7 @@ trap cleanup EXIT  # Ensure cleanup function is called on script exit
 handle_error() {
     local error_message="$1"
     echo "Error: $error_message"
+    cleanup
     exit 1
 }
 
@@ -39,15 +40,15 @@ apt-get install -y python3 python3-pip wget || handle_error "Failed to install p
 # Download the application archive
 wget -q "$DOWNLOAD_URL" -P "$TMP_DIR" || handle_error "Failed to download application archive."
 
-# Download requirements.txt separately
-wget -q "$REQUIREMENTS_URL" -O "$TMP_DIR/requirements.txt" || handle_error "Failed to download requirements file."
-
 # Extract the application archive
 mkdir -p "$INSTALL_DIR" || handle_error "Failed to create installation directory."
 tar -xzf "$TMP_DIR/$TAR_FILE" -C "$INSTALL_DIR" --strip-components=1 || handle_error "Failed to extract application archive."
 
+# Download requirements.txt separately
+wget -q "$REQUIREMENTS_URL" -O "$INSTALL_DIR/requirements.txt" || handle_error "Failed to download requirements file."
+
 # Install Python dependencies
-pip3 install -r "$TMP_DIR/requirements.txt" || handle_error "Failed to install Python dependencies."
+pip3 install -r "$INSTALL_DIR/requirements.txt" || handle_error "Failed to install Python dependencies."
 
 # Create a symbolic link for easy access
 ln -sf "$INSTALL_DIR/sman" /usr/local/bin/sman || handle_error "Failed to create symbolic link."
