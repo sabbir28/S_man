@@ -11,7 +11,7 @@ fi
 # Define variables
 APP_DIR="/opt/sman"
 INSTALL_DIR="$APP_DIR/sman-linux-x86_64"
-DOWNLOAD_URL="https://example.com/path/to/sman-linux-x86_64.tar.gz"  # Replace with actual download URL
+DOWNLOAD_URL="https://github.com/sabbir28/S_man/raw/main/build_excutable/linux/sman-linux-x86_64.tar.gz"
 TAR_FILE="sman-linux-x86_64.tar.gz"
 
 # Ensure necessary packages are installed
@@ -19,23 +19,23 @@ apt-get update
 apt-get install -y python3 python3-pip wget  # Install Python, pip, and wget
 
 # Download the application archive
-wget "$DOWNLOAD_URL" -O "$TAR_FILE"
+wget "$DOWNLOAD_URL" -P /tmp
 
 # Extract the application archive
 mkdir -p "$INSTALL_DIR"
-tar -xzvf "$TAR_FILE" -C "$INSTALL_DIR" --strip-components=1
+tar -xzvf "/tmp/$TAR_FILE" -C "$INSTALL_DIR" --strip-components=1
 
 # Install Python dependencies
 pip3 install -r "$INSTALL_DIR/requirements.txt"
 
 # Create a symbolic link for easy access
-ln -s "$INSTALL_DIR/sman" /usr/local/bin/sman
+ln -sf "$INSTALL_DIR/sman" /usr/local/bin/sman
 
 # Optional: Set permissions (adjust as needed)
 chmod +x /usr/local/bin/sman
 
 # Clean up downloaded archive
-rm "$TAR_FILE"
+rm "/tmp/$TAR_FILE"
 
 echo "sman has been successfully installed."
 echo "You can now run it using 'sman' command."
