@@ -1,0 +1,9 @@
+# Requirements for sman command-line tool
+
+argparse==1.4.0
+requests==2.26.0
+colorama==0.4.4
+importlib-metadata==4.9.0
+
+# For build this project
+cx-Freeze
