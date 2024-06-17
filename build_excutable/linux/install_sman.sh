@@ -50,6 +50,11 @@ wget -q "$REQUIREMENTS_URL" -O "$INSTALL_DIR/requirements.txt" || handle_error "
 # Install Python dependencies
 pip3 install -r "$INSTALL_DIR/requirements.txt" || handle_error "Failed to install Python dependencies."
 
+# Remove existing symbolic link if it exists
+if [ -L "/usr/local/bin/sman" ]; then
+    rm -f /usr/local/bin/sman || handle_error "Failed to remove existing symbolic link."
+fi
+
 # Create a symbolic link for easy access
 ln -sf "$INSTALL_DIR/sman" /usr/local/bin/sman || handle_error "Failed to create symbolic link."
 
