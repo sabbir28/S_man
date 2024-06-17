@@ -1,4 +1,4 @@
-name: Build Linux Executable
+name: Build and Upload Linux Executable
 
 on:
   push:
@@ -13,28 +13,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.12'
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.12'
 
-    - name: Install PyInstaller
-      run: |
-        pip install pyinstaller
+      - name: Install PyInstaller
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller
 
-    - name: Build Linux executable
-      run: |
-        pyinstaller --onefile sman.py
-        mkdir -p dist/linux
-        mv dist/sman dist/linux/sman
+      - name: Build Linux executable
+        run: |
+          pyinstaller --onefile sman.py
+          mkdir -p dist/linux
+          mv dist/sman dist/linux/sman
 
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: linux-executable
-        path: dist/linux/sman
-      env:
-        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: linux-executable
+          path: dist/linux/sman
