@@ -1,0 +1,5 @@
+# Set to LF for files in the repository
+* text eol=lf
+
+# Explicitly set to CRLF for Windows-specific files or directories
+*.bat text eol=crlf
