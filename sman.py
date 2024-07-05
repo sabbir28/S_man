@@ -15,7 +15,8 @@ banner = r"""
 \___ \  |\/ |   _ \     \ | 
       | |   |  ___ \  |\  | 
 _____/ _|  _|_/    _\_| \_| 
-    _____|                  
+    _____| 
+Made By SABBIR
 """
 
 # Apply colors to the banner
